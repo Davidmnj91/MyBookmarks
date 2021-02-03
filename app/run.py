@@ -1,15 +1,16 @@
-from flask import Flask, jsonify
-from pymongo.mongo_client import MongoClient
+import os
 
-from app.bookmarks import bp
+from api import create_app
 
-app = Flask(__name__)
+app = create_app()
 
-app.register_blueprint(bp)
+def run():
+    debug = os.environ.get('APP_DEBUG', True)
+    host = os.environ.get('APP_HOST', '0.0.0.0')
+    port = int(os.environ.get('APP_PORT', 5000))
 
-@app.route('/')
-def index():
-    return jsonify("Hello from App!!")
+    app.run(debug=debug, host=host, port=port)
 
-if __name__ == "__main__":
-    app.run(debug=True)
+
+if __name__ == '__main__':
+    run()
