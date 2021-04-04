@@ -1,0 +1,149 @@
+swagger: "2.0"
+info:
+  description: "Golang project to save your bookmarks"
+  version: "1.0.0"
+  title: "My Bookmarks"
+  termsOfService: "http://swagger.io/terms/"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:5000"
+basePath: "/api"
+tags:
+  - name: "bookmarks"
+    description: "Bookmarks operations"
+schemes:
+  - "http"
+paths:
+  /bookmarks:
+    post:
+      tags:
+        - "bookmarks"
+      summary: "Add a new bookmark to the store"
+      description: ""
+      operationId: "addbookmark"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Bookmark object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/Bookmark"
+      responses:
+        "405":
+          description: "Invalid input"
+    get:
+      tags:
+        - "bookmarks"
+      summary: "Add a new bookmark to the store"
+      description: ""
+      operationId: "retrieveallbookmarks"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Bookmark"
+      security:
+        - petstore_auth:
+            - "write:pets"
+            - "read:pets"
+  /bookmarks/{bookmarkId}:
+    get:
+      tags:
+        - "bookmarks"
+      summary: "Find bookmark by ID"
+      description: "Returns a single bookmark"
+      operationId: "getBookmarkById"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "bookmarkId"
+          in: "path"
+          description: "ID of bookmark to return"
+          required: true
+          type: "string"
+          format: "uuid"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Bookmark"
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Bookmark not found"
+    put:
+      tags:
+        - "bookmarks"
+      summary: "Updates a bookmark in the store with form data"
+      description: ""
+      operationId: "updateBookmarkWithForm"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "bookmarkId"
+          in: "path"
+          description: "ID of bookmark that needs to be updated"
+          required: true
+          type: "string"
+          format: "uuid"
+        - name: "body"
+          in: "body"
+          description: "Updated fields of the bookmark"
+          required: true
+          schema:
+            $ref: "#/definitions/Bookmark"
+      responses:
+        "405":
+          description: "Invalid input"
+    delete:
+      tags:
+        - "bookmarks"
+      summary: "Deletes a bookmark"
+      description: ""
+      operationId: "deleteBookmark"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "bookmarkId"
+          in: "path"
+          description: "Bookmark id to delete"
+          required: true
+          type: "string"
+          format: "uuid"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Bookmark not found"
+definitions:
+  Bookmark:
+    type: "object"
+    required:
+      - "url"
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+      url:
+        type: "string"
+        format: "uri"
+        example: "http://google.es"
+      title:
+        type: "string"
+        example: "My Favourite Bookmark"
+    xml:
+      name: "Bookmark"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
