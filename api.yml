@@ -32,7 +32,7 @@ paths:
           description: "Bookmark object that needs to be added to the store"
           required: true
           schema:
-            $ref: "#/definitions/Bookmark"
+            $ref: "#/definitions/ClientBookmark"
       responses:
         "405":
           description: "Invalid input"
@@ -102,7 +102,7 @@ paths:
           description: "Updated fields of the bookmark"
           required: true
           schema:
-            $ref: "#/definitions/Bookmark"
+            $ref: "#/definitions/ClientBookmark"
       responses:
         "405":
           description: "Invalid input"
@@ -127,14 +127,11 @@ paths:
         "404":
           description: "Bookmark not found"
 definitions:
-  Bookmark:
+  ClientBookmark:
     type: "object"
     required:
       - "url"
     properties:
-      id:
-        type: "string"
-        format: "uuid"
       url:
         type: "string"
         format: "uri"
@@ -142,8 +139,21 @@ definitions:
       title:
         type: "string"
         example: "My Favourite Bookmark"
-    xml:
-      name: "Bookmark"
+  Bookmark:
+    allOf:
+      - $ref: "#/definitions/ClientBookmark"
+      - type: "object"
+        properties:
+          id:
+            type: "string"
+            format: "uuid"
+            example: "b6244264-3777-411f-8d05-bebd2c0603e4"
+          createdAt:
+            type: "string"
+            format: "date-time"
+          updatedAt:
+            type: "string"
+            format: "date-time"
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
