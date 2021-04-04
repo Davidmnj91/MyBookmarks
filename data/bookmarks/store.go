@@ -62,6 +62,7 @@ func (s *Store) ReadBookmark(id string) (*domain.Bookmark, error) {
 }
 
 func (s *Store) EditBookmark(id string, bookmark *domain.Bookmark) (*domain.Bookmark, error) {
+	bookmark.ID = id
 	entity, err := toDBModel(bookmark)
 
 	if err != nil {

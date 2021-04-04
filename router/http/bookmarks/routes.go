@@ -38,13 +38,13 @@ func NewRoutesFactory(group *gin.RouterGroup) func(service bookmarks.BookmarkSer
 				return
 			}
 
-			newAuthor, err := service.CreateBookmark(bookmark)
+			newBookmark, err := service.CreateBookmark(bookmark)
 			if err != nil {
 				c.Error(err)
 				return
 			}
 
-			c.JSON(http.StatusCreated, *toResponseModel(newAuthor))
+			c.JSON(http.StatusCreated, *toResponseModel(newBookmark))
 		})
 
 		group.PUT("/:bookmarkID", func(c *gin.Context) {
@@ -57,13 +57,13 @@ func NewRoutesFactory(group *gin.RouterGroup) func(service bookmarks.BookmarkSer
 				return
 			}
 
-			newAuthor, err := service.EditBookmark(id, bookmark)
+			editedBookmark, err := service.EditBookmark(id, bookmark)
 			if err != nil {
 				c.Error(err)
 				return
 			}
 
-			c.JSON(http.StatusCreated, *toResponseModel(newAuthor))
+			c.JSON(http.StatusCreated, *toResponseModel(editedBookmark))
 		})
 
 		group.GET("/:bookmarkID", func(c *gin.Context) {

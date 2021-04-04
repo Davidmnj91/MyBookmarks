@@ -7,6 +7,13 @@ import (
 )
 
 func toDBModel(entity *domain.Bookmark) (*Bookmark, error) {
+	if len(entity.ID) == 0 {
+		return &Bookmark{
+			URL:   entity.Url,
+			Title: entity.Title,
+		}, nil
+	}
+
 	id, err := uuid.Parse(entity.ID)
 
 	if err != nil {
