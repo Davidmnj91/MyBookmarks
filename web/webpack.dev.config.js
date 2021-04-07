@@ -1,5 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
+const dotenv = require('dotenv');
+
+const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
@@ -28,9 +31,15 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(dotenv.config().parsed),
+    }),
     new HtmlWebpackPlugin({
       template: 'public/index.html',
       favicon: 'public/favicon.ico',
+    }),
+    new CopyPlugin({
+      patterns: [{ from: 'public/manifest.json' }],
     }),
     new webpack.HotModuleReplacementPlugin(),
     new ForkTsCheckerWebpackPlugin({
