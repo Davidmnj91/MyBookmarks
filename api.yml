@@ -39,7 +39,7 @@ paths:
     get:
       tags:
         - "bookmarks"
-      summary: "Add a new bookmark to the store"
+      summary: "Retrieves all bookmarks"
       description: ""
       operationId: "retrieveallbookmarks"
       consumes:
